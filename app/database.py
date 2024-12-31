@@ -6,6 +6,9 @@ load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
 
+# Motor is an async library for MongoDB that helps perform
+# database operations asynchronously, suitable for applications 
+# that use async/await like FastAPI.
 client = AsyncIOMotorClient(MONGO_URI)
 db = client.task_manager
 

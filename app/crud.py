@@ -35,6 +35,7 @@ async def create_user(user: UserCreate):
     hashed_password = get_password_hash(user.password)
     user_doc = {"username": user.username, "password": hashed_password}
     result = await users_collection.insert_one(user_doc)
+    # Auto create user id when user information is inserted in mongodb
     new_user = await users_collection.find_one({"_id": result.inserted_id})
     return user_helper(new_user)
 
