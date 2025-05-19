@@ -37,14 +37,13 @@ def detect_objects_with_model(image: np.ndarray):
     for box in results.boxes:
         label_id = int(box.cls[0])
         label = model.names[label_id]
-        conf = float(box.conf[0])  # Lấy confidence
-        if label in ["dog", "cat"]:
-            x1, y1, x2, y2 = map(int, box.xyxy[0])
-            detections.append({
-                "label": label,
-                "confidence": conf,
-                "bbox": [x1, y1, x2, y2]
-            })
+        conf = float(box.conf[0])
+        x1, y1, x2, y2 = map(int, box.xyxy[0])
+        detections.append({
+            "label": label,
+            "confidence": conf,
+            "bbox": [x1, y1, x2, y2]
+        })
     return detections
 
 
