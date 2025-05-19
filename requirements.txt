@@ -8,3 +8,6 @@ python-multipart
 passlib[bcrypt]
 PyJWT
 pydantic
+opencv-python
+pillow
+ultralytics

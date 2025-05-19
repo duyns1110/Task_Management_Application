@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Object Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+        }
+        .preview {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 600px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Upload an image to detect objects</h2>
+    <form id="uploadForm">
+        <input type="file" id="imageInput" name="file" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <div class="preview">
+        <h3>Result:</h3>
+        <img id="resultImage" src="" alt="Processed image will appear here">
+    </div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const resultImg = document.getElementById('resultImage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('imageInput');
+            const file = input.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const response = await fetch("/detect-object/", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                alert("Error detecting objects.");
+                return;
+            }
+
+            const blob = await response.blob();
+            resultImg.src = URL.createObjectURL(blob);
+        });
+    </script>
+</body>
+</html>
